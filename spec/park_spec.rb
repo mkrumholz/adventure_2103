@@ -105,4 +105,34 @@ describe Park do
       expect(park.hikeable_miles).to eq 7.5
     end
   end
+
+  describe '#trails_by_level' do
+    it 'returns trails at specified level' do
+      details_1 = {
+        name: 'Grand Wash',
+        length: '2.2 miles',
+        level: :easy
+      }
+      trail_1 = Trail.new(details_1)
+      details_2 = {
+        name: 'Cohab Canyon',
+        length: '1.7 miles',
+        level: :moderate
+      }
+      trail_2 = Trail.new(details_2)
+      details_3 = {
+        name: 'Chimney Rock Loop',
+        length: '3.6 miles',
+        level: :strenuous
+      }
+      trail_3 = Trail.new(details_3)
+      park = Park.new('Capitol Reef')
+
+      park.add_trail(trail_1)
+      park.add_trail(trail_2)
+      park.add_trail(trail_3)
+
+      expect(park.trails_by_level(:moderate)).to eq [trail_2]
+    end
+  end
 end
