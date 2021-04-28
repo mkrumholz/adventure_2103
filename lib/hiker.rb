@@ -24,4 +24,9 @@ class Hiker
       park.trails_by_level(@experience_level)
     end
   end
+
+  def favorite_snack
+    favorite = @snacks.max_by { |snack, quantity| quantity }
+    favorite.first
+  end
 end
