@@ -20,4 +20,10 @@ class Park
   def hikeable_miles
     @trails.sum { |trail| trail.length }
   end
+
+  def trails_by_level(level)
+    @trails.find_all do |trail|
+      trail.level == level
+    end
+  end
 end
