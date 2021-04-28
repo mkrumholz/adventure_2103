@@ -21,7 +21,7 @@ class Park
     @trails.sum { |trail| trail.length }
   end
 
-  def trails_by_level(level)
+  def trails_for_experience_level(level)
     @trails.find_all do |trail|
       trail.level == level
     end

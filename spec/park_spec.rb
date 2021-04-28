@@ -106,7 +106,7 @@ describe Park do
     end
   end
 
-  describe '#trails_by_level' do
+  describe '#trails_for_experience_level' do
     it 'returns trails at specified level' do
       details_1 = {
         name: 'Grand Wash',
@@ -132,7 +132,7 @@ describe Park do
       park.add_trail(trail_2)
       park.add_trail(trail_3)
 
-      expect(park.trails_by_level(:moderate)).to eq [trail_2]
+      expect(park.trails_for_experience_level(:moderate)).to eq [trail_2]
     end
   end
 end

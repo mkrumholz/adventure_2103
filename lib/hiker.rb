@@ -21,7 +21,7 @@ class Hiker
 
   def possible_trails
     @parks_visited.flat_map do |park|
-      park.trails_by_level(@experience_level)
+      park.trails_for_experience_level(@experience_level)
     end
   end
 
