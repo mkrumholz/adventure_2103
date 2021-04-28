@@ -19,17 +19,15 @@ class Park
     @trails.sum { |trail| trail.length }
   end
 
-  def trails_for_experience_level(level)
+  def trails_for_experience(level)
     @trails.find_all { |trail| trail.level == level }
   end
 
   def trails_by_level
     @trails.each_with_object(Hash.new([])) do |trail, trails_by_level|
-      if trails_by_level.keys.include?(trail.level)
-        trails_by_level[trail.level] << trail.name
-      else
-        trails_by_level[trail.level] = [trail.name]
-      end
+      level = trail.level
+      trails = trails_for_experience(level).map {|trail| trail.name }
+      trails_by_level[level] = trails
     end
   end
 end

@@ -132,7 +132,7 @@ describe Park do
       park.add_trail(trail_2)
       park.add_trail(trail_3)
 
-      expect(park.trails_for_experience_level(:moderate)).to eq [trail_2]
+      expect(park.trails_for_experience(:moderate)).to eq [trail_2]
     end
   end
 
