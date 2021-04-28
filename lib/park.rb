@@ -43,7 +43,6 @@ class Park
     hiker = {hiker => hiker.possible_trails}
     log = {date.strftime('%m/%d') => hiker}
     @visitors_log[date.year] = log
-    require "pry"; binding.pry
     # end
   end
 end
