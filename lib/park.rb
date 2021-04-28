@@ -1,10 +1,12 @@
 class Park
   attr_reader :name,
-              :trails
+              :trails,
+              :visitors_log
 
   def initialize(name)
     @name = name
     @trails = []
+    @visitors_log = {}
   end
 
   def add_trail(trail)
@@ -29,5 +31,19 @@ class Park
       trails = trails_for_experience(level).map {|trail| trail.name }
       trails_by_level[level] = trails
     end
+  end
+
+  def log_visit(hiker, date)
+    # years = @visitors_log.keys
+    # if years.include?(date.year)
+    #   hiker = {hiker => hiker.possible_trails}
+    #   log = {date.strftime('%m/%d') => hiker}
+    #   @visitors_log[date.year] += log
+    # else
+    hiker = {hiker => hiker.possible_trails}
+    log = {date.strftime('%m/%d') => hiker}
+    @visitors_log[date.year] = log
+    require "pry"; binding.pry
+    # end
   end
 end

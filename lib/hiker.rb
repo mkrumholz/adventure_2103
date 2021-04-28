@@ -16,6 +16,7 @@ class Hiker
   end
 
   def visit(park)
+    park.log_visit(self, Date.today)
     @parks_visited << park
   end
 

@@ -1,3 +1,4 @@
+require 'date'
 require './lib/trail'
 require './lib/park'
 require './lib/hiker'

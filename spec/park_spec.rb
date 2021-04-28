@@ -1,5 +1,7 @@
+require 'date'
 require './lib/trail'
 require './lib/park'
+require './lib/hiker'
 
 describe Park do
   describe '#initialize' do
@@ -19,6 +21,12 @@ describe Park do
       park = Park.new('Capitol Reef')
 
       expect(park.trails).to eq []
+    end
+
+    it 'starts with no vists in the visitors log' do
+      park = Park.new('Capitol Reef')
+
+      expect(park.visitors_log).to eq({})
     end
   end
 
@@ -199,8 +207,8 @@ describe Park do
     end
   end
 
-  describe '#visitors_log' do
-    it 'returns a hash of visits (values) by year (keys)' do
+  describe '#log_visit' do
+    it 'adds a visit to the visitors log' do
       details_1 = {
         name: 'Rim Trail',
         length: '11 miles',
@@ -228,46 +236,96 @@ describe Park do
 
       park = Park.new('Bryce Canyon')
       hiker1 = Hiker.new('Dora', :moderate)
-      hiker2 = Hiker.new('Frank', :easy)
-      hiker3 = Hiker.new('Jack', :strenuous)
-      hiker4 = Hiker.new('Sally', :strenuous)
 
+      park.add_trail(trail_1)
+      park.add_trail(trail_2)
+      park.add_trail(trail_3)
+      park.add_trail(trail_4)
+
+      allow_any_instance_of(Date).to receive(:year).and_return(1980)
+      allow_any_instance_of(Date).to receive(:strftime).and_return('06/23')
       hiker1.visit(park) # 06/23/1980
-      hiker2.visit(park) # 06/24/1980
-      hiker3.visit(park) # 06/24/1980
-      hiker4.visit(park) # 06/25/1980
-      hiker1.visit(park) # 06/23/2020
-      hiker2.visit(park) # 06/24/1920
-      hiker3.visit(park) # 06/24/1920
-      hiker4.visit(park) # 06/25/1920
 
       expected = {
         1980 => {
-          "06/23" => {
+          '06/23' => {
             hiker1 => [trail_2, trail_3]
-          },
-          "06/24" => {
-            hiker2 => [trail_1],
-            hiker3 => [trail_4]
-          },
-          "06/25" => {
-            hiker4 => [trail_4]
           }
-        },
-        2020 => {
-          "06/23" => {
-            hiker1 => [trail_2, trail_3]
-          },
-          "06/24" => {
-            hiker2 => [trail_1],
-            hiker3 => [trail_4]
-          },
-          "06/25" => {
-            hiker4 => [trail_4]
-            }
-        },
+        }
       }
       expect(park.visitors_log).to eq expected
     end
   end
+
+  # describe '#visitors_log' do
+  #   it 'returns a hash of visits (values) by year (keys)' do
+  #     details_1 = {
+  #       name: 'Rim Trail',
+  #       length: '11 miles',
+  #       level: :easy
+  #     }
+  #     trail_1 = Trail.new(details_1)
+  #     details_2 = {
+  #       name: 'Queen\'s/Navajo Loop',
+  #       length: '2.9 miles',
+  #       level: :moderate
+  #     }
+  #     trail_2 = Trail.new(details_2)
+  #     details_3 = {
+  #       name: 'Tower Bridge',
+  #       length: '3 miles',
+  #       level: :moderate
+  #     }
+  #     trail_3 = Trail.new(details_3)
+  #     details_4 = {
+  #       name: 'Peekaboo Loop',
+  #       length: '5.5 miles',
+  #       level: :strenuous
+  #     }
+  #     trail_4 = Trail.new(details_4)
+  #
+  #     park = Park.new('Bryce Canyon')
+  #     hiker1 = Hiker.new('Dora', :moderate)
+  #     hiker2 = Hiker.new('Frank', :easy)
+  #     hiker3 = Hiker.new('Jack', :strenuous)
+  #     hiker4 = Hiker.new('Sally', :strenuous)
+  #
+  #     hiker1.visit(park) # 06/23/1980
+  #     hiker2.visit(park) # 06/24/1980
+  #     hiker3.visit(park) # 06/24/1980
+  #     hiker4.visit(park) # 06/25/1980
+  #     hiker1.visit(park) # 06/23/2020
+  #     hiker2.visit(park) # 06/24/1920
+  #     hiker3.visit(park) # 06/24/1920
+  #     hiker4.visit(park) # 06/25/1920
+  #
+  #     expected = {
+  #       1980 => {
+  #         "06/23" => {
+  #           hiker1 => [trail_2, trail_3]
+  #         },
+  #         "06/24" => {
+  #           hiker2 => [trail_1],
+  #           hiker3 => [trail_4]
+  #         },
+  #         "06/25" => {
+  #           hiker4 => [trail_4]
+  #         }
+  #       },
+  #       2020 => {
+  #         "06/23" => {
+  #           hiker1 => [trail_2, trail_3]
+  #         },
+  #         "06/24" => {
+  #           hiker2 => [trail_1],
+  #           hiker3 => [trail_4]
+  #         },
+  #         "06/25" => {
+  #           hiker4 => [trail_4]
+  #           }
+  #       },
+  #     }
+  #     expect(park.visitors_log).to eq expected
+  #   end
+  # end
 end
