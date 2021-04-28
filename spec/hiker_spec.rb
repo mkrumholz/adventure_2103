@@ -22,6 +22,12 @@ describe Hiker do
 
       expect(hiker.snacks).to eq({})
     end
+
+    it 'starts with no parks visited' do
+      hiker = Hiker.new('Dora', :moderate)
+
+      expect(hiker.parks_visited).to eq []
+    end
   end
 
   describe '#pack' do
@@ -36,6 +42,19 @@ describe Hiker do
         'trail mix' => 3
       }
       expect(hiker.snacks).to eq expected
+    end
+  end
+
+  describe '#visit_park' do
+    it 'adds a park to hiker parks_visited' do
+      hiker = Hiker.new('Dora', :moderate)
+      park_1 = Park.new('Capitol Reef')
+      park_2 = Park.new('Bryce Canyon')
+
+      hiker.visit(park_1)
+      hiker.visit(park_2)
+
+      expect(hiker.parks_visited).to eq [park_1, park_2]
     end
   end
 end
